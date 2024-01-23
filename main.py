@@ -2,6 +2,7 @@ from turtle import Screen
 from paddle import Paddle
 from ball import Ball
 import time
+from scoreboard import Scoreboard
 screen = Screen()
 screen.setup(width=800, height=600)
 screen.bgcolor("black")
@@ -12,6 +13,7 @@ screen.tracer(0)
 leftPaddle = Paddle("left")
 rightPaddle = Paddle("right")
 ball = Ball()
+scoreboard = Scoreboard()
 # ball2 = Ball()
 # ball2.penup()
 # ball2.goto((330,250))
@@ -28,10 +30,9 @@ screen.onkeypress(key="s",fun=leftPaddle.down)
 screen.onkeypress(key="Up",fun=rightPaddle.up)
 screen.onkeypress(key="Down",fun=rightPaddle.down)
 
-
 isGameOn = True
 while isGameOn:
-  time.sleep(.1)
+  time.sleep(ball.speed)
   screen.update()
   # checking collision with upper or lower wall and changing Ydirection
   if ball.ycor()>280 or ball.ycor()<-280:
@@ -47,10 +48,16 @@ while isGameOn:
   # check if right paddle missed the ball
   if ball.xcor()>370:
     ball.resetPosition()
+    scoreboard.lPoint()
+    # speed.resetSpeed()
   
   # check if left paddle missed the ball
   if ball.xcor()<-370:
-    ball.resetPosition()
+    ball.resetPosition()   
+    scoreboard.rPoint()
+    # speed.resetSpeed()
+    
+
   ball.move()
   
 
